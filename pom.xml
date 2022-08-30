@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.revature</groupId>
-    <artifactId>IERS</artifactId>
+    <artifactId>iers</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -71,7 +71,7 @@
                     <configuration>
                         <url>http://localhost:8080/manager/text</url>
                         <server>LocalTomcat</server>
-                        <path>/IERS</path>
+                        <path>/iers</path>
                         <update>true</update>
                     </configuration>
                 </plugin>
