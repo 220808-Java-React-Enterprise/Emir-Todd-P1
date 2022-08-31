@@ -18,6 +18,8 @@ public class Reimbursement {
 
     private String payment_id;
 
+    private String author_id;
+
     private String resolver_id;
 
     private String status_id;
@@ -27,7 +29,7 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
-    public Reimbursement(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, Blob receipt, String payment_id, String resolver_id, String status_id, String type_id) {
+    public Reimbursement(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, Blob receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
         this.reimb_id = reimb_id;
         this.amount = amount;
         this.submitted = submitted;
@@ -35,6 +37,7 @@ public class Reimbursement {
         this.description = description;
         this.receipt = receipt;
         this.payment_id = payment_id;
+        this.author_id = author_id;
         this.resolver_id = resolver_id;
         this.status_id = status_id;
         this.type_id = type_id;
@@ -96,6 +99,14 @@ public class Reimbursement {
         this.payment_id = payment_id;
     }
 
+    public String getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(String author_id) {
+        this.author_id = author_id;
+    }
+
     public String getResolver_id() {
         return resolver_id;
     }
@@ -130,6 +141,7 @@ public class Reimbursement {
                 ", description='" + description + '\'' +
                 ", receipt=" + receipt +
                 ", payment_id='" + payment_id + '\'' +
+                ", author_id='" + author_id + '\'' +
                 ", resolver_id='" + resolver_id + '\'' +
                 ", status_id='" + status_id + '\'' +
                 ", type_id='" + type_id + '\'' +

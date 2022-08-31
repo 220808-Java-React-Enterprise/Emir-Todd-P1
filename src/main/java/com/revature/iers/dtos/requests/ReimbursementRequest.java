@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 public class ReimbursementRequest {
     private String reimb_id;
-    private Number amount;
+    private Double amount;
     private Timestamp submitted;
     private Timestamp resolved;
     //descriptions vary from these types: Lodging, Travel, Food, Other
@@ -24,7 +24,7 @@ public class ReimbursementRequest {
     }
 
     //this constructor for finance manager use? bc they would want to see more information on a request
-    public ReimbursementRequest(String reimb_id, Number amount, Timestamp submitted, Timestamp resolved, String description, Blob receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
+    public ReimbursementRequest(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, Blob receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
         this.reimb_id = reimb_id;
         this.amount = amount;
         this.submitted = submitted;
@@ -38,7 +38,7 @@ public class ReimbursementRequest {
         this.type_id = type_id;
     }
     //perhaps just for an employee to see their submissions.
-    public ReimbursementRequest(Number amount, Timestamp submitted, Timestamp resolved, String description, String status_id) {
+    public ReimbursementRequest(Double amount, Timestamp submitted, Timestamp resolved, String description, String status_id) {
         this.amount = amount;
         this.submitted = submitted;
         this.resolved = resolved;
@@ -54,11 +54,11 @@ public class ReimbursementRequest {
         this.reimb_id = reimb_id;
     }
 
-    public Number getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Number amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
