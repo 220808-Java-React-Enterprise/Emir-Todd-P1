@@ -1,12 +1,14 @@
 package com.revature.iers.daos;
 
 import com.revature.iers.models.Reimbursement;
+import com.revature.iers.models.User;
 import com.revature.iers.utils.custom_exceptions.InvalidSQLException;
 import com.revature.iers.utils.database.ConnectionFactory;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -44,6 +46,23 @@ public class ReimbursementDAO implements CrudDAO<Reimbursement> {
 
     @Override
     public Reimbursement getById(String id) {
+        return null;
+    }
+
+
+    public Reimbursement getByRequestId(String id) {
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_reimbursements WHERE reimb_id = ?");
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Reimbursement(rs.getString("reimb_id"), rs.getDouble("amount"), rs.getTimestamp("submitted"), rs.getTimestamp("resolved"), rs.getString("description"), rs.getBlob("receipt"), rs.getString("payment_id"), rs.getString("author_id"), rs.getString("resolver_id"), rs.getString("status_id"), rs.getString("type_id"));
+            }
+
+        } catch (SQLException e) {
+            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+        }
         return null;
     }
 

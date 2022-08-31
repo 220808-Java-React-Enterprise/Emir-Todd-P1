@@ -43,6 +43,10 @@ public class Reimbursement {
         this.type_id = type_id;
     }
 
+    public Reimbursement(String toString, Double amount, String description, Blob receipt, String payment_id, String author_id, String type_id) {
+
+    }
+
     public String getReimb_id() {
         return reimb_id;
     }
