@@ -15,7 +15,7 @@ public class Reimbursement {
 
     private String description;
 
-    private byte[] receipt;
+    private byte receipt;
 
     private String payment_id;
 
@@ -30,7 +30,7 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
-    public Reimbursement(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, byte[] receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
+    public Reimbursement(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, byte receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
         this.reimb_id = reimb_id;
         this.amount = amount;
         this.submitted = submitted;
@@ -42,9 +42,6 @@ public class Reimbursement {
         this.resolver_id = resolver_id;
         this.status_id = status_id;
         this.type_id = type_id;
-    }
-
-    public Reimbursement(String toString, Double amount, String description, byte[] receipt, String payment_id, String author_id, String type_id) {
     }
 
     public String getReimb_id() {
@@ -87,11 +84,11 @@ public class Reimbursement {
         this.description = description;
     }
 
-    public byte[] getReceipt() {
+    public byte getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(byte[] receipt) {
+    public void setReceipt(byte receipt) {
         this.receipt = receipt;
     }
 
@@ -135,22 +132,6 @@ public class Reimbursement {
         this.type_id = type_id;
     }
 
-    @Override
-    public String toString() {
-        return "Reimbursement{" +
-                "reimb_id='" + reimb_id + '\'' +
-                ", amount=" + amount +
-                ", submitted=" + submitted +
-                ", resolved=" + resolved +
-                ", description='" + description + '\'' +
-                ", receipt=" + Arrays.toString(receipt) +
-                ", payment_id='" + payment_id + '\'' +
-                ", author_id='" + author_id + '\'' +
-                ", resolver_id='" + resolver_id + '\'' +
-                ", status_id='" + status_id + '\'' +
-                ", type_id='" + type_id + '\'' +
-                '}';
-    }
 }
 
 

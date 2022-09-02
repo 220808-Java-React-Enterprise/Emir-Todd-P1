@@ -3,6 +3,7 @@ package com.revature.iers.services;
 import com.revature.iers.daos.UserDAO;
 import com.revature.iers.dtos.requests.LoginRequest;
 import com.revature.iers.dtos.requests.NewUserRequest;
+import com.revature.iers.dtos.requests.UpdateUserRequest;
 import com.revature.iers.dtos.responses.Principal;
 import com.revature.iers.models.User;
 import com.revature.iers.utils.custom_exceptions.AuthenticationException;
@@ -41,8 +42,27 @@ public class UserService {
         return new Principal(user.getId(), user.getUsername(), user.getRole());
     }
 
+    public User updateUser(UpdateUserRequest updateUserRequest){
+        User user = null;
+
+        if (isValidUsername(updateUserRequest.getUsername())) {
+            if (!isDuplicateUsername(updateUserRequest.getUsername())) {
+                if (isValidPassword(updateUserRequest.getPassword())) {
+                        user = new User(UUID.randomUUID().toString(), updateUserRequest.getUsername(), updateUserRequest.getEmail(), updateUserRequest.getPassword(), updateUserRequest.getGiven_name(), updateUserRequest.getSurName(), false, "cd6ff5e0-1f05-482b-aaec-8b2f045260db");
+                        userDAO.update(user);
+
+                }
+            }
+        }
+        return user;
+    }
+
     public User getUserById(String id) {
         return userDAO.getById(id);
+    }
+
+    public User getUserByUsername(String username){
+        return userDAO.getUsername(username);
     }
 
     public boolean isValidUsername(String username) {
