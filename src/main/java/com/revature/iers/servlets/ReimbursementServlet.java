@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ReimbursementServlet extends HttpServlet {
     private final ObjectMapper mapper;
@@ -46,6 +47,9 @@ public class ReimbursementServlet extends HttpServlet {
             resp.getWriter().write(mapper.writeValueAsString(e.getMessage()));
         } catch (ResourceConflictException e) {
             resp.setStatus(409); // CONFLICT
+        } catch (SQLException e) {
+//            resp.setStatus(500); //server issue?
+            throw new RuntimeException(e);
         }
     }
 }

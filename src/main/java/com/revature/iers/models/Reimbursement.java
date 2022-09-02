@@ -2,6 +2,7 @@ package com.revature.iers.models;
 
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 public class Reimbursement {
     private String reimb_id;
@@ -14,7 +15,7 @@ public class Reimbursement {
 
     private String description;
 
-    private Blob receipt;
+    private byte[] receipt;
 
     private String payment_id;
 
@@ -29,7 +30,7 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
-    public Reimbursement(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, Blob receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
+    public Reimbursement(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, byte[] receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
         this.reimb_id = reimb_id;
         this.amount = amount;
         this.submitted = submitted;
@@ -43,8 +44,7 @@ public class Reimbursement {
         this.type_id = type_id;
     }
 
-    public Reimbursement(String toString, Double amount, String description, Blob receipt, String payment_id, String author_id, String type_id) {
-
+    public Reimbursement(String toString, Double amount, String description, byte[] receipt, String payment_id, String author_id, String type_id) {
     }
 
     public String getReimb_id() {
@@ -87,11 +87,11 @@ public class Reimbursement {
         this.description = description;
     }
 
-    public Blob getReceipt() {
+    public byte[] getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Blob receipt) {
+    public void setReceipt(byte[] receipt) {
         this.receipt = receipt;
     }
 
@@ -143,7 +143,7 @@ public class Reimbursement {
                 ", submitted=" + submitted +
                 ", resolved=" + resolved +
                 ", description='" + description + '\'' +
-                ", receipt=" + receipt +
+                ", receipt=" + Arrays.toString(receipt) +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
                 ", resolver_id='" + resolver_id + '\'' +
