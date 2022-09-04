@@ -1,7 +1,7 @@
 package com.revature.iers.dtos.requests;
 
 public class UpdateUserRequest {
-
+    private String username;
     private String email;
     private String password;
 
@@ -15,13 +15,27 @@ public class UpdateUserRequest {
     public UpdateUserRequest() {
     }
 
-    public UpdateUserRequest(String email, String password, String given_name, String surName, boolean is_active, String role) {
+    public UpdateUserRequest(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
+
+    public UpdateUserRequest(String username, String email, String password, String given_name, String surName, boolean is_active, String role) {
+        this.username = username;
         this.email = email;
         this.password = password;
         this.given_name = given_name;
         this.surName = surName;
         this.is_active = is_active;
         this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -75,7 +89,8 @@ public class UpdateUserRequest {
     @Override
     public String toString() {
         return "UpdateUserRequest{" +
-                "email='" + email + '\'' +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", given_name='" + given_name + '\'' +
                 ", surName='" + surName + '\'' +
