@@ -10,24 +10,29 @@ public class UpdateUserRequest {
     private String surName;
 
     private boolean is_active;
-    private String role = "EMPLOYEE";
+    private String role_id;
 
     public UpdateUserRequest() {
     }
 
-    public UpdateUserRequest(String username, String password){
+    public UpdateUserRequest(String username) {
         this.username = username;
-        this.password = password;
     }
 
-    public UpdateUserRequest(String username, String email, String password, String given_name, String surName, boolean is_active, String role) {
+    public UpdateUserRequest(String username, String password, String role_id){
+        this.username = username;
+        this.password = password;
+        this.role_id = role_id;
+    }
+
+    public UpdateUserRequest(String username, String email, String password, String given_name, String surName, boolean is_active, String role_id) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.given_name = given_name;
         this.surName = surName;
         this.is_active = is_active;
-        this.role = role;
+        this.role_id = role_id;
     }
 
     public String getUsername() {
@@ -78,12 +83,12 @@ public class UpdateUserRequest {
         this.is_active = is_active;
     }
 
-    public String getRole() {
-        return role;
+    public String getRole_id() {
+        return role_id;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole_id(String role_id) {
+        this.role_id = role_id;
     }
 
     @Override
@@ -95,7 +100,7 @@ public class UpdateUserRequest {
                 ", given_name='" + given_name + '\'' +
                 ", surName='" + surName + '\'' +
                 ", is_active=" + is_active +
-                ", role='" + role + '\'' +
+                ", role_id='" + role_id + '\'' +
                 '}';
     }
 }
