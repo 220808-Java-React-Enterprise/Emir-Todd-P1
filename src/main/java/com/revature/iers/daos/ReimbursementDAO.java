@@ -26,7 +26,7 @@ public class ReimbursementDAO implements CrudDAO<Reimbursement> {
             ps.setTimestamp(3, obj.getSubmitted());
             ps.setTimestamp(4, obj.getResolved());
             ps.setString(5, obj.getDescription());
-            ps.setByte(6, obj.getReceipt());
+            ps.setBlob(6, obj.getReceipt());
             ps.setString(7, obj.getPayment_id());
             ps.setString(8, obj.getAuthor_id());
             ps.setString(9, obj.getResolver_id());
@@ -61,7 +61,7 @@ public class ReimbursementDAO implements CrudDAO<Reimbursement> {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return new Reimbursement(rs.getString("reimb_id"), rs.getDouble("amount"), rs.getTimestamp("submitted"), rs.getTimestamp("resolved"), rs.getString("description"), rs.getByte("receipt"), rs.getString("payment_id"), rs.getString("author_id"), rs.getString("resolver_id"), rs.getString("status_id"), rs.getString("type_id"));
+                return new Reimbursement(rs.getString("reimb_id"), rs.getDouble("amount"), rs.getTimestamp("submitted"), rs.getTimestamp("resolved"), rs.getString("description"), rs.getBlob("receipt"), rs.getString("payment_id"), rs.getString("author_id"), rs.getString("resolver_id"), rs.getString("status_id"), rs.getString("type_id"));
             }
 
         } catch (SQLException e) {
