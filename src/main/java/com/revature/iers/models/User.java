@@ -30,6 +30,15 @@ public class User {
         this.role = role;
     }
 
+    public User(String username, boolean is_active) {
+        this.username = username;
+        this.is_active = is_active;
+    }
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public User(String id, String username, String email, String password, String given_name, String surName, boolean is_active, String role) {
         this.id = id;
         this.username = username;

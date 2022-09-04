@@ -6,10 +6,7 @@ import com.revature.iers.daos.UserDAO;
 import com.revature.iers.services.ReimbursementService;
 import com.revature.iers.services.TokenService;
 import com.revature.iers.services.UserService;
-import com.revature.iers.servlets.AuthServlet;
-import com.revature.iers.servlets.ReimbursementServlet;
-import com.revature.iers.servlets.TestServlet;
-import com.revature.iers.servlets.UserServlet;
+import com.revature.iers.servlets.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -26,6 +23,7 @@ public class ContextLoaderListener implements ServletContextListener {
         UserServlet userServlet = new UserServlet(mapper, new UserService(new UserDAO()));
         AuthServlet authServlet = new AuthServlet(mapper, new TokenService(new JwtConfig()), new UserService(new UserDAO()));
         ReimbursementServlet reimbursementServlet = new ReimbursementServlet(mapper, new ReimbursementService(new ReimbursementDAO()));
+        AdminServlet adminServlet = new AdminServlet(mapper, new TokenService(new JwtConfig()), new UserService(new UserDAO()));
 
         /* Need ServletContext class to map whatever servlet to url path. */
         ServletContext context = sce.getServletContext();
@@ -33,6 +31,7 @@ public class ContextLoaderListener implements ServletContextListener {
         context.addServlet("UserServlet", userServlet).addMapping("/users/*");
         context.addServlet("AuthServlet", authServlet).addMapping("/auth");
         context.addServlet("ReimbursementServlet", reimbursementServlet).addMapping(("/reimbursement/*"));
+        context.addServlet("AdminServlet", adminServlet).addMapping("/admin/*");
     }
 
     @Override

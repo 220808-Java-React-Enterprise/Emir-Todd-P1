@@ -47,9 +47,35 @@ public class UserDAO implements CrudDAO<User> {
         }
     }
 
+    public void updateUserActive(User object){
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE ers_users SET is_active = ? WHERE username = ?");
+            ps.setBoolean(1, object.getIs_active());
+            ps.setString(2, object.getUsername());
+            ps.executeUpdate();
+        }catch(SQLException e){
+            throw new InvalidSQLException("Error occurred connecting to database");
+        }
+    }
+    public void updateUserPassword(User object){
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE ers_users SET password = ? WHERE username = ?");
+            ps.setString(1, object.getPassword());
+            ps.setString(2, object.getUsername());
+            ps.executeUpdate();
+        }catch(SQLException e){
+            throw new InvalidSQLException("Error occurred connecting to database");
+        }
+    }
     @Override
-    public void delete(String id) {
-
+    public void delete(String username) {
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("DELETE FROM ers_users WHERE username = ?");
+            ps.setString(1, username);
+            ps.executeUpdate();
+        }catch(SQLException e){
+            throw new InvalidSQLException("Error occurred connecting to database");
+        }
     }
 
     @Override
@@ -95,6 +121,21 @@ public class UserDAO implements CrudDAO<User> {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_users WHERE username = ? and \"password\" = ?");
             ps.setString(1, username);
             ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next())
+                return new User(rs.getString("user_id"), rs.getString("username"), rs.getString("password"), rs.getString("role_id"));
+        } catch (SQLException e) {
+            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+        }
+
+        return null;
+    }
+
+    public User getUserByUsername(String username) {
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_users WHERE username = ?");
+            ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next())

@@ -1,6 +1,7 @@
 package com.revature.iers.services;
 
 import com.revature.iers.daos.UserDAO;
+import com.revature.iers.dtos.requests.DeleteUserRequest;
 import com.revature.iers.dtos.requests.LoginRequest;
 import com.revature.iers.dtos.requests.NewUserRequest;
 import com.revature.iers.dtos.requests.UpdateUserRequest;
@@ -26,7 +27,7 @@ public class UserService {
             if (!isDuplicateUsername(request.getUsername())) {
                 if (isValidPassword(request.getPassword())) {
                     if (isSamePassword(request.getPassword(), request.getPasswordConfirm())) {
-                        user = new User(UUID.randomUUID().toString(), request.getUsername(), request.getEmail(), request.getPassword(), request.getGiven_name(), request.getSurName(), false, "8756d6d6-289e-11ed-a261-0242ac120002");
+                        user = new User(UUID.randomUUID().toString(), request.getUsername(), request.getEmail(), request.getPassword(), request.getGiven_name(), request.getSurName(), false, "3");
                         userDAO.save(user);
                     }
                 }
@@ -42,28 +43,38 @@ public class UserService {
         return new Principal(user.getId(), user.getUsername(), user.getRole());
     }
 
-    public User updateUser(UpdateUserRequest updateUserRequest){
+    public User updateUserActive(UpdateUserRequest updateUserRequest){
         User user = null;
 
         if (isValidUsername(updateUserRequest.getUsername())) {
-            if (!isDuplicateUsername(updateUserRequest.getUsername())) {
-                if (isValidPassword(updateUserRequest.getPassword())) {
-                        user = new User(UUID.randomUUID().toString(), updateUserRequest.getUsername(), updateUserRequest.getEmail(), updateUserRequest.getPassword(), updateUserRequest.getGiven_name(), updateUserRequest.getSurName(), false, "cd6ff5e0-1f05-482b-aaec-8b2f045260db");
-                        userDAO.update(user);
+                        user = new User(updateUserRequest.getUsername(), updateUserRequest.isIs_active());
+                        userDAO.updateUserActive(user);
+                    }
 
-                }
-            }
+        return user;
+    }
+
+    public User updateUserPassword(UpdateUserRequest updateUserRequest){
+        User user = null;
+
+        if (isValidUsername(updateUserRequest.getUsername())) {
+            user = new User(updateUserRequest.getUsername(), updateUserRequest.getPassword());
+            userDAO.updateUserPassword(user);
         }
+
         return user;
     }
 
     public User getUserById(String id) {
         return userDAO.getById(id);
     }
-
-    public User getUserByUsername(String username){
-        return userDAO.getUsername(username);
+    public void deleteUserByUsername(DeleteUserRequest request){
+        userDAO.delete(request.getUsername());
     }
+
+//    public User getUserByUsername(String username){
+//        return userDAO.getUsername(username);
+//    }
 
     public boolean isValidUsername(String username) {
         if (!username.matches("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$")) throw new InvalidRequestException("\nInvalid username! username is 8-20 characters long. no _ or . at the beginning. no __ or _. or ._ or .. inside");
