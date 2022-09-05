@@ -78,7 +78,7 @@ public class ReimbursementServlet extends HttpServlet {
             if (path[3].equals("status_update")) {
                 if (principal.getRole_id().equals("2")) {
                     request.setResolver_id(principal.getId());
-                    Reimbursement createdRequest = reimbursementService.updateReimbursmentStatus(request);
+                    Reimbursement createdRequest = reimbursementService.updateReimbursementStatus(request);
 
                     resp.setStatus(200); // CREATED
                     resp.setContentType("application/json");
@@ -86,6 +86,15 @@ public class ReimbursementServlet extends HttpServlet {
                     resp.getWriter().write(mapper.writeValueAsString(createdRequest.getStatus_id()));
                 }  else {
                     resp.setStatus(403); //FORBIDDEN
+                }
+            } else if (path[3].equals("update_reimb")) {
+                if (principal.getRole_id().equals("3")) {
+                    Reimbursement createdRequest = reimbursementService.updateReimbursement(request);
+
+                    resp.setStatus(200); // CREATED
+                    resp.setContentType("application/json");
+                    resp.getWriter().write(mapper.writeValueAsString(createdRequest));
+
                 }
             } else {
                 System.out.println("NO");

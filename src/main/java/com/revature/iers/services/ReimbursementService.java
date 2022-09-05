@@ -4,17 +4,10 @@ import com.revature.iers.daos.ReimbursementDAO;
 
 import com.revature.iers.dtos.requests.NewReimbursementRequest;
 import com.revature.iers.dtos.requests.ReimbursementRequest;
-import com.revature.iers.dtos.requests.UpdateUserRequest;
-import com.revature.iers.dtos.responses.Principal;
 import com.revature.iers.models.Reimbursement;
-import com.revature.iers.models.User;
-import com.revature.iers.utils.custom_exceptions.ResourceConflictException;
-
 
 
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.Instant;
 
@@ -32,11 +25,20 @@ public class ReimbursementService {
 
     }
 
-    public Reimbursement updateReimbursmentStatus(ReimbursementRequest reimbursementRequest){
+    public Reimbursement updateReimbursementStatus(ReimbursementRequest reimbursementRequest){
         Reimbursement reimbursement = null;
         Timestamp ts = Timestamp.from(Instant.now());
             reimbursement = new Reimbursement(reimbursementRequest.getStatus_id(), ts, reimbursementRequest.getResolver_id(), reimbursementRequest.getReimb_id());
             reimbursementDAO.updateReimbursementStatus(reimbursement);
+
+        return reimbursement;
+    }
+
+    public Reimbursement updateReimbursement(ReimbursementRequest reimbursementRequest){
+        Reimbursement reimbursement = null;
+
+        reimbursement = new Reimbursement(reimbursementRequest.getAmount(), reimbursementRequest.getDescription(), reimbursementRequest.getReceipt(), reimbursementRequest.getPayment_id(), reimbursementRequest.getType_id(), reimbursementRequest.getReimb_id());
+        reimbursementDAO.updateReimbursement(reimbursement);
 
         return reimbursement;
     }

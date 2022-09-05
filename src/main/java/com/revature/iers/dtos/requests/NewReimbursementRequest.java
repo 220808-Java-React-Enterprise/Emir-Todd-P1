@@ -1,17 +1,11 @@
 package com.revature.iers.dtos.requests;
 
-
-import com.revature.iers.dtos.responses.Principal;
-
-import java.sql.Blob;
-
 public class NewReimbursementRequest {
     private double amount;
     private String description;
     private String receipt;
     private String payment_id;
     private String author_id;
-
     private String type_id;
 
     public NewReimbursementRequest() {
