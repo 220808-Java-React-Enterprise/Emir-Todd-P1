@@ -57,6 +57,10 @@ public class Reimbursement {
         this.type_id = type_id;
     }
 
+    public Reimbursement(String reimb_id) {
+        this.reimb_id = reimb_id;
+    }
+
     public String getReimb_id() {
         return reimb_id;
     }

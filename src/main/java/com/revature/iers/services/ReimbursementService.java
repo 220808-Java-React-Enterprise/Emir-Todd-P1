@@ -51,4 +51,18 @@ public class ReimbursementService {
     public List<Reimbursement> listReimb(){
        return reimbursementDAO.getAll();
     }
+
+    public List<Reimbursement> listReimbByAuthor(String reimb){
+        return reimbursementDAO.getAllByAuthor(reimb);
+    }
+    public List<Reimbursement> listReimbByType(String reimb){
+        return reimbursementDAO.getAllByType(reimb);
+    }
+    public List<Reimbursement> listReimbByStatus(String reimb){
+        return reimbursementDAO.getAllByStatus(reimb);
+    }
+
+    public Reimbursement getByReimbId(String reimb) {
+        return reimbursementDAO.getByRequestId(reimb);
+    }
 }

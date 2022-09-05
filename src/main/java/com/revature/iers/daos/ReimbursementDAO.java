@@ -94,4 +94,75 @@ public class ReimbursementDAO implements CrudDAO<Reimbursement> {
 
         return listReimb;
     }
+    public List<Reimbursement> getAllByAuthor(String reimb) {
+        List<Reimbursement> listReimb = new ArrayList<>();
+
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_reimbursements WHERE author_id = ?");
+            ps.setString(1, reimb);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                Reimbursement reimbursement= new Reimbursement(rs.getString("reimb_id"), rs.getDouble("amount"),
+                        rs.getTimestamp("submitted"), rs.getTimestamp("resolved"), rs.getString("description"),
+                        rs.getString("receipt"), rs.getString("payment_id"), rs.getString("author_id"),
+                        rs.getString("resolver_id"), rs.getString("status_id"), rs.getString("type_id"));
+                listReimb.add(reimbursement);
+            }
+
+        }catch(SQLException e){
+            throw new InvalidSQLException("Error occurred connecting to database");
+        }
+
+        return listReimb;
+    }
+
+    public List<Reimbursement> getAllByType(String reimb) {
+        List<Reimbursement> listReimb = new ArrayList<>();
+
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_reimbursements WHERE type_id = ?");
+            ps.setString(1, reimb);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                Reimbursement reimbursement= new Reimbursement(rs.getString("reimb_id"), rs.getDouble("amount"),
+                        rs.getTimestamp("submitted"), rs.getTimestamp("resolved"), rs.getString("description"),
+                        rs.getString("receipt"), rs.getString("payment_id"), rs.getString("author_id"),
+                        rs.getString("resolver_id"), rs.getString("status_id"), rs.getString("type_id"));
+                listReimb.add(reimbursement);
+            }
+
+        }catch(SQLException e){
+            throw new InvalidSQLException("Error occurred connecting to database");
+        }
+
+        return listReimb;
+
+    }
+
+    public List<Reimbursement> getAllByStatus(String reimb) {
+        List<Reimbursement> listReimb = new ArrayList<>();
+
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_reimbursements WHERE status_id = ?");
+            ps.setString(1, reimb);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                Reimbursement reimbursement= new Reimbursement(rs.getString("reimb_id"), rs.getDouble("amount"),
+                        rs.getTimestamp("submitted"), rs.getTimestamp("resolved"), rs.getString("description"),
+                        rs.getString("receipt"), rs.getString("payment_id"), rs.getString("author_id"),
+                        rs.getString("resolver_id"), rs.getString("status_id"), rs.getString("type_id"));
+                listReimb.add(reimbursement);
+            }
+
+        }catch(SQLException e){
+            throw new InvalidSQLException("Error occurred connecting to database");
+        }
+
+        return listReimb;
+
+    }
+
 }
