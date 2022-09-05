@@ -3,7 +3,7 @@ public class Principal {
 
     private String id;
     private String username;
-    private String role;
+    private String role_id;
 
     public Principal() {
 
@@ -12,7 +12,7 @@ public class Principal {
     public Principal(String id, String username, String role) {
         this.id = id;
         this.username = username;
-        this.role = role;
+        this.role_id = role;
     }
 
     public String getId() {
@@ -31,12 +31,12 @@ public class Principal {
         this.username = username;
     }
 
-    public String getRole() {
-        return role;
+    public String getRole_id() {
+        return role_id;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole_id(String role_id) {
+        this.role_id = role_id;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Principal {
         return "Principal{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
-                ", role='" + role + '\'' +
+                ", role='" + role_id + '\'' +
                 '}';
     }
 

@@ -38,7 +38,7 @@ public class AdminServlet extends HttpServlet {
 
             String[] path = req.getRequestURI().split("/");
 
-            if (principal.getRole().equals("1")) { //admin
+            if (principal.getRole_id().equals("1")) { //admin
                 if (path[3].equals("is_active")) {
                     User updatedUser = userService.updateUserActive(updateUserRequest);
 

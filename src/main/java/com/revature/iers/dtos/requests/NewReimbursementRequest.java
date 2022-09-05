@@ -1,12 +1,14 @@
 package com.revature.iers.dtos.requests;
 
 
+import com.revature.iers.dtos.responses.Principal;
+
 import java.sql.Blob;
 
 public class NewReimbursementRequest {
     private double amount;
     private String description;
-    private Blob receipt;
+    private String receipt;
     private String payment_id;
     private String author_id;
 
@@ -15,9 +17,7 @@ public class NewReimbursementRequest {
     public NewReimbursementRequest() {
     }
 
-
-
-    public NewReimbursementRequest(double amount, String description, Blob receipt, String payment_id, String author_id, String type_id) {
+    public NewReimbursementRequest(double amount, String description, String receipt, String payment_id, String author_id, String type_id) {
         this.amount = amount;
         this.description = description;
         this.receipt = receipt;
@@ -42,11 +42,11 @@ public class NewReimbursementRequest {
         this.description = description;
     }
 
-    public Blob getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Blob receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 
@@ -79,7 +79,7 @@ public class NewReimbursementRequest {
         return "NewReimbursementRequest{" +
                 "amount=" + amount +
                 ", description='" + description + '\'' +
-                ", receipt=" + receipt +
+                ", receipt='" + receipt + '\'' +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
                 ", type_id='" + type_id + '\'' +

@@ -22,7 +22,7 @@ public class ContextLoaderListener implements ServletContextListener {
         TestServlet testServlet = new TestServlet();
         UserServlet userServlet = new UserServlet(mapper, new UserService(new UserDAO()));
         AuthServlet authServlet = new AuthServlet(mapper, new TokenService(new JwtConfig()), new UserService(new UserDAO()));
-        ReimbursementServlet reimbursementServlet = new ReimbursementServlet(mapper, new ReimbursementService(new ReimbursementDAO()));
+        ReimbursementServlet reimbursementServlet = new ReimbursementServlet(mapper, new TokenService(new JwtConfig()), new ReimbursementService(new ReimbursementDAO()));
         AdminServlet adminServlet = new AdminServlet(mapper, new TokenService(new JwtConfig()), new UserService(new UserDAO()));
 
         /* Need ServletContext class to map whatever servlet to url path. */
