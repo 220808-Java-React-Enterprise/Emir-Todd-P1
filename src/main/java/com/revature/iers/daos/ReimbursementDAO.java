@@ -42,6 +42,19 @@ public class ReimbursementDAO implements CrudDAO<Reimbursement> {
 
     }
 
+    public void updateReimbursementStatus(Reimbursement object){
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE ers_reimbursements SET status_id = ?, resolved = ?, resolver_id =? WHERE reimb_id = ?");
+            ps.setString(1, object.getStatus_id());
+            ps.setTimestamp(2,object.getResolved());
+            ps.setString(3, object.getResolver_id());
+            ps.setString(4, object.getReimb_id());
+            ps.executeUpdate();
+        }catch(SQLException e){
+            throw new InvalidSQLException("Error occurred connecting to database");
+        }
+    }
+
     @Override
     public void delete(String id) {
 

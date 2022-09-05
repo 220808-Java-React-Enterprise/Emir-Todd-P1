@@ -61,6 +61,13 @@ public class Reimbursement {
         this.reimb_id = reimb_id;
     }
 
+    public Reimbursement(String status_id, Timestamp resolved, String resolver_id, String reimb_id) {
+        this.status_id = status_id;
+        this.resolved = resolved;
+        this.resolver_id = resolver_id;
+        this.reimb_id = reimb_id;
+    }
+
     public String getReimb_id() {
         return reimb_id;
     }

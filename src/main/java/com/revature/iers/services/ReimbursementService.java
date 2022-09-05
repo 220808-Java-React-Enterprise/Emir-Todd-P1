@@ -4,8 +4,10 @@ import com.revature.iers.daos.ReimbursementDAO;
 
 import com.revature.iers.dtos.requests.NewReimbursementRequest;
 import com.revature.iers.dtos.requests.ReimbursementRequest;
+import com.revature.iers.dtos.requests.UpdateUserRequest;
 import com.revature.iers.dtos.responses.Principal;
 import com.revature.iers.models.Reimbursement;
+import com.revature.iers.models.User;
 import com.revature.iers.utils.custom_exceptions.ResourceConflictException;
 
 
@@ -28,6 +30,15 @@ public class ReimbursementService {
     public ReimbursementService(ReimbursementDAO reimbursementDAO) {
         this.reimbursementDAO = reimbursementDAO;
 
+    }
+
+    public Reimbursement updateReimbursmentStatus(ReimbursementRequest reimbursementRequest){
+        Reimbursement reimbursement = null;
+        Timestamp ts = Timestamp.from(Instant.now());
+            reimbursement = new Reimbursement(reimbursementRequest.getStatus_id(), ts, reimbursementRequest.getResolver_id(), reimbursementRequest.getReimb_id());
+            reimbursementDAO.updateReimbursementStatus(reimbursement);
+
+        return reimbursement;
     }
     public Reimbursement reimbursementRequest(NewReimbursementRequest request) throws SQLException {
         Reimbursement reimbursement = null;

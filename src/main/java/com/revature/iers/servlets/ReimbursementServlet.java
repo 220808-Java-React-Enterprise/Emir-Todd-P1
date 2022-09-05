@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ReimbursementServlet extends HttpServlet {
     private final ObjectMapper mapper;
-
     private final TokenService tokenService;
     private final ReimbursementService reimbursementService;
 
@@ -51,8 +50,7 @@ public class ReimbursementServlet extends HttpServlet {
                 resp.setStatus(200); // CREATED
                 resp.setContentType("application/json");
                 resp.getWriter().write(mapper.writeValueAsString(createdRequest.getReimb_id()));
-            }
-             else {
+            } else {
                 System.out.println("NO");
             }
 
@@ -68,8 +66,41 @@ public class ReimbursementServlet extends HttpServlet {
     }
 
     @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            ReimbursementRequest request = mapper.readValue(req.getInputStream(), ReimbursementRequest.class);
+            String token = req.getHeader("Authorization");
+            Principal principal = tokenService.extractRequesterDetails(token);
+
+
+            String[] path = req.getRequestURI().split("/");
+
+            if (path[3].equals("status_update")) {
+                if (principal.getRole_id().equals("2")) {
+                    request.setResolver_id(principal.getId());
+                    Reimbursement createdRequest = reimbursementService.updateReimbursmentStatus(request);
+
+                    resp.setStatus(200); // CREATED
+                    resp.setContentType("application/json");
+                    resp.getWriter().write(mapper.writeValueAsString(createdRequest.getReimb_id()));
+                    resp.getWriter().write(mapper.writeValueAsString(createdRequest.getStatus_id()));
+                }  else {
+                    resp.setStatus(403); //FORBIDDEN
+                }
+            } else {
+                System.out.println("NO");
+            }
+        } catch (InvalidRequestException e) {
+            resp.setStatus(404); // BAD REQUEST
+            resp.getWriter().write(mapper.writeValueAsString(e.getMessage()));
+        } catch (ResourceConflictException e) {
+            resp.setStatus(409); // CONFLICT
+        }
+
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ReimbursementRequest request = mapper.readValue(req.getInputStream(), ReimbursementRequest.class);
         String token = req.getHeader("Authorization");
         Principal principal = tokenService.extractRequesterDetails(token);
 
@@ -78,48 +109,19 @@ public class ReimbursementServlet extends HttpServlet {
 
             if (path[3].equals("list")) {
                 if (principal.getRole_id().equals("2")) { // FINANCIAL MANAGER
-//                String username = req.getParameter("username");
-
                     resp.setContentType("application/json");
 
-//                    List<User> userList = userService.getAllUsers();
-//                    resp.getWriter().write(mapper.writeValueAsString(userList));
                     List<Reimbursement> listReimb = reimbursementService.listReimb();
                     for (int i = 0; i < listReimb.size(); i++) {
                         resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
                     }
-                }else if(principal.getRole_id().equals("3")){ // EMPLOYEE
+                } else if (principal.getRole_id().equals("3")) { // EMPLOYEE
                     resp.setContentType("application/json");
 
                     List<Reimbursement> listReimb = reimbursementService.listReimbByAuthor(principal.getId());
                     for (int i = 0; i < listReimb.size(); i++) {
                         resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
                     }
-                }
-            } else if (path[3].equals("list_type")){
-                if (principal.getRole_id().equals("2")) { // FINANCIAL MANAGER
-                    resp.setContentType("application/json");
-
-                    List<Reimbursement> listReimb = reimbursementService.listReimbByType(request.getType_id());
-                    for (int i = 0; i < listReimb.size(); i++) {
-                        resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
-                    }
-                }
-            } else if (path[3].equals("list_status")){
-                if (principal.getRole_id().equals("2")) { // FINANCIAL MANAGER
-                    resp.setContentType("application/json");
-
-                    List<Reimbursement> listReimb = reimbursementService.listReimbByStatus(request.getStatus_id());
-                    for (int i = 0; i < listReimb.size(); i++) {
-                        resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
-                    }
-                }
-            } else if (path[3].equals("view_reimbursement")){
-                if (principal.getRole_id().equals("2")) { // FINANCIAL MANAGER
-                    resp.setContentType("application/json");
-
-                    Reimbursement reimbursement = reimbursementService.getByReimbId(request.getReimb_id());
-                    resp.getWriter().write(mapper.writeValueAsString(reimbursement.getReimb_id()));
                 }
             } else {
                 resp.setStatus(403); // FORBIDDEN
