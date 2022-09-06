@@ -1,20 +1,17 @@
 package com.revature.iers.dtos.requests;
 
-
-
 public class NewReimbursementRequest {
-    private Double amount;
+    private double amount;
     private String description;
-    private byte receipt;
+    private String receipt;
     private String payment_id;
     private String author_id;
-
     private String type_id;
 
     public NewReimbursementRequest() {
     }
 
-    public NewReimbursementRequest(Double amount, String description, byte receipt, String payment_id, String author_id, String type_id) {
+    public NewReimbursementRequest(double amount, String description, String receipt, String payment_id, String author_id, String type_id) {
         this.amount = amount;
         this.description = description;
         this.receipt = receipt;
@@ -23,11 +20,11 @@ public class NewReimbursementRequest {
         this.type_id = type_id;
     }
 
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -39,11 +36,11 @@ public class NewReimbursementRequest {
         this.description = description;
     }
 
-    public byte getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(byte receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 
@@ -76,7 +73,7 @@ public class NewReimbursementRequest {
         return "NewReimbursementRequest{" +
                 "amount=" + amount +
                 ", description='" + description + '\'' +
-                ", receipt=" + receipt +
+                ", receipt='" + receipt + '\'' +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
                 ", type_id='" + type_id + '\'' +

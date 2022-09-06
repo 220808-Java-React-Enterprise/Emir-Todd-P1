@@ -1,10 +1,7 @@
 package com.revature.iers.services;
 
 import com.revature.iers.daos.UserDAO;
-import com.revature.iers.dtos.requests.DeleteUserRequest;
-import com.revature.iers.dtos.requests.LoginRequest;
-import com.revature.iers.dtos.requests.NewUserRequest;
-import com.revature.iers.dtos.requests.UpdateUserRequest;
+import com.revature.iers.dtos.requests.*;
 import com.revature.iers.dtos.responses.Principal;
 import com.revature.iers.models.User;
 import com.revature.iers.utils.custom_exceptions.AuthenticationException;
@@ -40,15 +37,15 @@ public class UserService {
     public Principal login(LoginRequest request) {
         User user = userDAO.getUserByUsernameAndPassword(request.getUsername(), request.getPassword());
         if (user == null) throw new AuthenticationException("\nIncorrect username or password :(");
-        return new Principal(user.getId(), user.getUsername(), user.getRole());
+        return new Principal(user.getId(), user.getUsername(), user.getRole_id());
     }
 
     public User updateUserActive(UpdateUserRequest updateUserRequest){
         User user = null;
 
         if (isValidUsername(updateUserRequest.getUsername())) {
-                        user = new User(updateUserRequest.getUsername(), updateUserRequest.isIs_active());
-                        userDAO.updateUserActive(user);
+            user = new User(updateUserRequest.getUsername(), updateUserRequest.isIs_active());
+            userDAO.updateUserActive(user);
                     }
 
         return user;
@@ -65,10 +62,22 @@ public class UserService {
         return user;
     }
 
+    public User updateUserRole(UpdateUserRequest updateUserRequest){
+        User user = null;
+
+        if (isValidUsername(updateUserRequest.getUsername())) {
+            user = new User(updateUserRequest.getUsername(), updateUserRequest.getPassword(), updateUserRequest.getRole_id());
+            userDAO.updateUserRole(user);
+        }
+
+        return user;
+    }
+
     public User getUserById(String id) {
         return userDAO.getById(id);
     }
-    public void deleteUserByUsername(DeleteUserRequest request){
+
+    public void deleteUserByUsername(UpdateUserRequest request){
         userDAO.delete(request.getUsername());
     }
 

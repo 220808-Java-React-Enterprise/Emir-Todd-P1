@@ -10,7 +10,7 @@ public class ReimbursementRequest {
     private Timestamp resolved;
     //descriptions vary from these types: Lodging, Travel, Food, Other
     private String description;
-    private Blob receipt;
+    private String receipt;
     private String payment_id;
     //author is the employee?
     private String author_id;
@@ -24,7 +24,8 @@ public class ReimbursementRequest {
     }
 
     //this constructor for finance manager use? bc they would want to see more information on a request
-    public ReimbursementRequest(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, Blob receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
+
+    public ReimbursementRequest(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
         this.reimb_id = reimb_id;
         this.amount = amount;
         this.submitted = submitted;
@@ -37,6 +38,7 @@ public class ReimbursementRequest {
         this.status_id = status_id;
         this.type_id = type_id;
     }
+
     //perhaps just for an employee to see their submissions.
     public ReimbursementRequest(Double amount, Timestamp submitted, Timestamp resolved, String description, String status_id) {
         this.amount = amount;
@@ -86,11 +88,11 @@ public class ReimbursementRequest {
         this.description = description;
     }
 
-    public Blob getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(Blob receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 
@@ -142,7 +144,7 @@ public class ReimbursementRequest {
                 ", submitted=" + submitted +
                 ", resolved=" + resolved +
                 ", description='" + description + '\'' +
-                ", receipt=" + receipt +
+                ", receipt='" + receipt + '\'' +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
                 ", resolver_id='" + resolver_id + '\'' +

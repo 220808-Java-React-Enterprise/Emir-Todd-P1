@@ -22,7 +22,7 @@ public class UserDAO implements CrudDAO<User> {
             ps.setString(5, obj.getGiven_name());
             ps.setString(6, obj.getSurName());
             ps.setBoolean(7, obj.getIs_active());
-            ps.setString(8, obj.getRole());
+            ps.setString(8, obj.getRole_id());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new InvalidSQLException("An error occurred when tyring to save to the database.");
@@ -40,7 +40,7 @@ public class UserDAO implements CrudDAO<User> {
             ps.setString(5, obj.getGiven_name());
             ps.setString(6, obj.getSurName());
             ps.setBoolean(7, obj.getIs_active());
-            ps.setString(8, obj.getRole());
+            ps.setString(8, obj.getRole_id());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new InvalidSQLException("An error occurred when tyring to save to the database.");
@@ -62,6 +62,18 @@ public class UserDAO implements CrudDAO<User> {
             PreparedStatement ps = con.prepareStatement("UPDATE ers_users SET password = ? WHERE username = ?");
             ps.setString(1, object.getPassword());
             ps.setString(2, object.getUsername());
+            ps.executeUpdate();
+        }catch(SQLException e){
+            throw new InvalidSQLException("Error occurred connecting to database");
+        }
+    }
+
+    public void updateUserRole(User object){
+        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE ers_users SET password = ?, role_id = ? WHERE username = ?");
+            ps.setString(1, object.getPassword());
+            ps.setString(2, object.getRole_id());
+            ps.setString(3, object.getUsername());
             ps.executeUpdate();
         }catch(SQLException e){
             throw new InvalidSQLException("Error occurred connecting to database");

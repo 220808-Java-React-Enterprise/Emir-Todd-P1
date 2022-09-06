@@ -1,13 +1,13 @@
 package com.revature.iers.models;
 
-import java.sql.Blob;
+
 import java.sql.Timestamp;
-import java.util.Arrays;
+
 
 public class Reimbursement {
     private String reimb_id;
 
-    private Double amount;
+    private double amount;
 
     private Timestamp submitted;
 
@@ -15,7 +15,7 @@ public class Reimbursement {
 
     private String description;
 
-    private byte receipt;
+    private String receipt;
 
     private String payment_id;
 
@@ -30,7 +30,7 @@ public class Reimbursement {
     public Reimbursement() {
     }
 
-    public Reimbursement(String reimb_id, Double amount, Timestamp submitted, Timestamp resolved, String description, byte receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
+    public Reimbursement(String reimb_id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String payment_id, String author_id, String resolver_id, String status_id, String type_id) {
         this.reimb_id = reimb_id;
         this.amount = amount;
         this.submitted = submitted;
@@ -44,7 +44,37 @@ public class Reimbursement {
         this.type_id = type_id;
     }
 
-    public Reimbursement(String toString, Double amount, String description, byte receipt, String payment_id, String author_id, String type_id) {
+    public Reimbursement(String reimb_id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt, String payment_id, String resolver_id, String status_id, String type_id) {
+        this.reimb_id = reimb_id;
+        this.amount = amount;
+        this.submitted = submitted;
+        this.resolved = resolved;
+        this.description = description;
+        this.receipt = receipt;
+        this.payment_id = payment_id;
+        this.resolver_id = resolver_id;
+        this.status_id = status_id;
+        this.type_id = type_id;
+    }
+
+    public Reimbursement(String reimb_id) {
+        this.reimb_id = reimb_id;
+    }
+
+    public Reimbursement(String status_id, Timestamp resolved, String resolver_id, String reimb_id) {
+        this.status_id = status_id;
+        this.resolved = resolved;
+        this.resolver_id = resolver_id;
+        this.reimb_id = reimb_id;
+    }
+
+    public Reimbursement(Double amount, String description, String receipt, String payment_id, String type_id, String reimb_id) {
+        this.amount = amount;
+        this.description = description;
+        this.receipt = receipt;
+        this.payment_id = payment_id;
+        this.type_id = type_id;
+        this.reimb_id = reimb_id;
     }
 
     public String getReimb_id() {
@@ -55,11 +85,11 @@ public class Reimbursement {
         this.reimb_id = reimb_id;
     }
 
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -87,11 +117,11 @@ public class Reimbursement {
         this.description = description;
     }
 
-    public byte getReceipt() {
+    public String getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(byte receipt) {
+    public void setReceipt(String receipt) {
         this.receipt = receipt;
     }
 
@@ -143,7 +173,7 @@ public class Reimbursement {
                 ", submitted=" + submitted +
                 ", resolved=" + resolved +
                 ", description='" + description + '\'' +
-                ", receipt=" + receipt +
+                ", receipt='" + receipt + '\'' +
                 ", payment_id='" + payment_id + '\'' +
                 ", author_id='" + author_id + '\'' +
                 ", resolver_id='" + resolver_id + '\'' +

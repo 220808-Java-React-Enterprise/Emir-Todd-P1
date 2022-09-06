@@ -8,7 +8,6 @@ import com.revature.iers.services.TokenService;
 import com.revature.iers.services.UserService;
 import com.revature.iers.utils.custom_exceptions.InvalidRequestException;
 import com.revature.iers.utils.custom_exceptions.ResourceConflictException;
-import jdk.nashorn.internal.parser.Token;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,9 +35,10 @@ public class AdminServlet extends HttpServlet {
             Principal principal = tokenService.extractRequesterDetails(token);
             UpdateUserRequest updateUserRequest = mapper.readValue(req.getInputStream(), UpdateUserRequest.class);
 
+
             String[] path = req.getRequestURI().split("/");
 
-            if (principal.getRole().equals("1")) { //admin
+            if (principal.getRole_id().equals("1")) { //admin
                 if (path[3].equals("is_active")) {
                     User updatedUser = userService.updateUserActive(updateUserRequest);
 
@@ -53,6 +53,20 @@ public class AdminServlet extends HttpServlet {
                     resp.setContentType("application/json");
                     resp.getWriter().write(mapper.writeValueAsString(updatedUser.getUsername()));
                     resp.getWriter().write(mapper.writeValueAsString(updatedUser.getPassword()));
+                } else if (path[3].equals("role")) {
+                    User updatedUser = userService.updateUserRole(updateUserRequest);
+
+                    resp.setStatus(200); // CREATED
+                    resp.setContentType("application/json");
+                    resp.getWriter().write(mapper.writeValueAsString(updatedUser.getUsername()));
+                    resp.getWriter().write(mapper.writeValueAsString(updatedUser.getPassword()));
+                    resp.getWriter().write(mapper.writeValueAsString(updatedUser.getRole_id()));
+                } else if (path[3].equals("delete")) {
+                     userService.deleteUserByUsername(updateUserRequest);
+
+                    resp.setStatus(200); // CREATED
+                    resp.setContentType("application/json");
+                    resp.getWriter().write("Successfully Deleted!");
                 } else {
                     System.out.println("NO");
                 }
@@ -66,5 +80,9 @@ public class AdminServlet extends HttpServlet {
             resp.setStatus(409); // CONFLICT
         }
     }
+
+//    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+//
+//    }
 }
 

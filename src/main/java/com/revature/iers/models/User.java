@@ -11,23 +11,28 @@ public class User {
     private String surName;
 
     private boolean is_active;
-    private String role = "EMPLOYEE";
+    private String role_id;
 
     public User() {
 
     }
 
-    public User(String id, String username, String password) {
-        this.id = id;
+    public User(String username) {
         this.username = username;
-        this.password = password;
     }
 
-    public User(String id, String username, String password, String role) {
+    public User(String username, String password, String role_id) {
+        this.username = username;
+        this.password = password;
+        this.role_id = role_id;
+    }
+
+
+    public User(String id, String username, String password, String role_id) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.role_id = role_id;
     }
 
     public User(String username, boolean is_active) {
@@ -39,7 +44,8 @@ public class User {
         this.password = password;
     }
 
-    public User(String id, String username, String email, String password, String given_name, String surName, boolean is_active, String role) {
+
+    public User(String id, String username, String email, String password, String given_name, String surName, boolean is_active, String role_id) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -47,7 +53,7 @@ public class User {
         this.given_name = given_name;
         this.surName = surName;
         this.is_active = is_active;
-        this.role = role;
+        this.role_id = role_id;
     }
 
     public String getId() {
@@ -106,12 +112,12 @@ public class User {
         this.is_active = is_active;
     }
 
-    public String getRole() {
-        return role;
+    public String getRole_id() {
+        return role_id;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole_id(String role_id) {
+        this.role_id = role_id;
     }
 
     @Override
@@ -123,8 +129,8 @@ public class User {
                 ", password='" + password + '\'' +
                 ", given_name='" + given_name + '\'' +
                 ", surName='" + surName + '\'' +
-                ", is_active='" + is_active + '\'' +
-                ", role='" + role + '\'' +
+                ", is_active=" + is_active +
+                ", role_id='" + role_id + '\'' +
                 '}';
     }
 }
