@@ -36,8 +36,11 @@ public class UserService {
 
     public Principal login(LoginRequest request) {
         User user = userDAO.getUserByUsernameAndPassword(request.getUsername(), request.getPassword());
-        if (user == null) throw new AuthenticationException("\nIncorrect username or password :(");
-        return new Principal(user.getId(), user.getUsername(), user.getRole_id());
+        if (!user.getIs_active()) throw new AuthenticationException("\nUser is not active!");
+        {
+            if (user == null) throw new AuthenticationException("\nIncorrect username or password :(");
+            return new Principal(user.getId(), user.getUsername(), user.getRole_id(), user.getIs_active());
+        }
     }
 
     public User updateUserActive(UpdateUserRequest updateUserRequest){

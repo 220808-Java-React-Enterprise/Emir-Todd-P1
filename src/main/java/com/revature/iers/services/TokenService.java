@@ -28,6 +28,9 @@ public class TokenService {
                 .setExpiration(new Date(now + jwtConfig.getExpiration()))
                 .setSubject(subject.getUsername())
                 .claim("role", subject.getRole_id())
+
+                .claim("is_active", subject.getIs_active())
+
                 .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
 
         return tokenBuilder.compact();
@@ -40,7 +43,8 @@ public class TokenService {
                     .parseClaimsJws(token)
                     .getBody();
 
-            return new Principal(claims.getId(), claims.getSubject(), claims.get("role", String.class));
+            return new Principal(claims.getId(), claims.getSubject(), claims.get("role", String.class),
+                    claims.get("is_active", Boolean.class));
         } catch (Exception e) {
             return null;
         }

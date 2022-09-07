@@ -5,6 +5,7 @@ public class Principal {
     private String username;
     private String role_id;
 
+    private Boolean is_active;
     public Principal() {
 
     }
@@ -13,6 +14,13 @@ public class Principal {
         this.id = id;
         this.username = username;
         this.role_id = role;
+    }
+
+    public Principal(String id, String username, String role_id, Boolean is_active) {
+        this.id = id;
+        this.username = username;
+        this.role_id = role_id;
+        this.is_active = is_active;
     }
 
     public String getId() {
@@ -39,13 +47,21 @@ public class Principal {
         this.role_id = role_id;
     }
 
+    public Boolean getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(Boolean is_active) {
+        this.is_active = is_active;
+    }
+
     @Override
     public String toString() {
         return "Principal{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
-                ", role='" + role_id + '\'' +
+                ", role_id='" + role_id + '\'' +
+                ", is_active=" + is_active +
                 '}';
     }
-
 }
