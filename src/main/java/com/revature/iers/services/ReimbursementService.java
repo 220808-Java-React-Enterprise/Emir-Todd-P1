@@ -5,6 +5,7 @@ import com.revature.iers.daos.ReimbursementDAO;
 import com.revature.iers.dtos.requests.NewReimbursementRequest;
 import com.revature.iers.dtos.requests.ReimbursementRequest;
 import com.revature.iers.models.Reimbursement;
+import com.revature.iers.models.User;
 import com.revature.iers.utils.custom_exceptions.InvalidRequestException;
 
 
@@ -28,6 +29,7 @@ public class ReimbursementService {
     }
 
     public Reimbursement updateReimbursementStatus(ReimbursementRequest reimbursementRequest) {
+        //for the finance manager
         Reimbursement reimbursement = null;
         Timestamp ts = Timestamp.from(Instant.now());
 
@@ -39,21 +41,26 @@ public class ReimbursementService {
     }
 
     public Reimbursement updateReimbursement(ReimbursementRequest reimbursementRequest) {
+        //for employee
         Reimbursement reimbursement = null;
 
-        reimbursement = new Reimbursement(reimbursementRequest.getAmount(), reimbursementRequest.getDescription(), reimbursementRequest.getReceipt(), reimbursementRequest.getPayment_id(), reimbursementRequest.getType_id(), reimbursementRequest.getReimb_id(), "123");
-        reimbursementDAO.updateReimbursement(reimbursement);
+        if (isNumeric(reimbursementRequest.getAmount())) {
+            if (isValidType(reimbursementRequest.getType_id())) {
+                if (isTooManyCharacters(reimbursementRequest.getDescription())) {
+                    if (isTooManyCharacters(reimbursementRequest.getPayment_id())) {
+                        reimbursement = new Reimbursement(reimbursementRequest.getAmount(), reimbursementRequest.getDescription(), reimbursementRequest.getReceipt(), reimbursementRequest.getPayment_id(), reimbursementRequest.getType_id(), reimbursementRequest.getReimb_id(), "123");
+                        reimbursementDAO.updateReimbursement(reimbursement);
+                    }
+                }
+            }
+        }
 
         return reimbursement;
     }
 
     public Reimbursement reimbursementRequest(NewReimbursementRequest request) throws SQLException {
         Reimbursement reimbursement = null;
-
         Timestamp ts = Timestamp.from(Instant.now());
-//        int blobLength = (int) request.getReceipt().length();
-//        byte[] blobAsBytes = request.getReceipt().getBytes(1, blobLength);
-//        leaving if we ever can come back to figure out the blob
 
 
         reimbursement = new Reimbursement(UUID.randomUUID().toString(), request.getAmount(), ts, null, request.getDescription(), null, null, request.getAuthor_id(), null, "123", request.getType_id());
@@ -117,9 +124,12 @@ public class ReimbursementService {
 
     public boolean isNumeric(Double amount){
        String amounts = amount.toString();
-        if (!amounts.matches("^(0|[1-9][0-9]*)$")) throw new InvalidRequestException("\nInvalid Entry, please use numbers in this format '00.00' ");
+        if (!amounts.matches("(?:\\d{1,3}(?:(?=([.,]))(?:\\1\\d{3})*)?|\\d+)(?:(?!\\1)[.,]\\d{1,2})?(?![,.\\d])")) throw new InvalidRequestException("\nInvalid Entry, please use numbers in this format '00.00' ");
         return true;
     }
-
+    public boolean isTooManyCharacters(String amount){
+        if (!amount.matches("^[a-z]{0,40}$")) throw new InvalidRequestException("\nToo many characters! Please limit to 40!");
+        return true;
+    }
 
 }

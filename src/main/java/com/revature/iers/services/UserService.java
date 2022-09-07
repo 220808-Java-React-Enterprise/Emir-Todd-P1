@@ -36,11 +36,10 @@ public class UserService {
 
     public Principal login(LoginRequest request) {
         User user = userDAO.getUserByUsernameAndPassword(request.getUsername(), request.getPassword());
-        if (!user.getIs_active()) throw new AuthenticationException("\nUser is not active!");
-        {
-            if (user == null) throw new AuthenticationException("\nIncorrect username or password :(");
-            return new Principal(user.getId(), user.getUsername(), user.getRole_id(), user.getIs_active());
-        }
+        if (!isActiveUser(user.getIs_active())) throw new AuthenticationException("\nUser is not active!");
+        if (user == null) throw new AuthenticationException("\nIncorrect username or password :(");
+        return new Principal(user.getId(), user.getUsername(), user.getRole_id(), user.getIs_active());
+
     }
 
     public User updateUserActive(UpdateUserRequest updateUserRequest){
@@ -107,4 +106,20 @@ public class UserService {
         if (!password.equals(passwordConfirm)) throw new InvalidRequestException("\nPassword do not match :(");
         return true;
     }
+
+    public boolean isValidEmail(String email) {
+        if (!email.matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")) throw new InvalidRequestException("\nInvalid email entry!");
+        return true;
+    }
+
+    public boolean isValidName(String name) {
+        if (!name.matches("^[a-zA-Z ]*$")) throw new InvalidRequestException("\nInvalid name entry!");
+        return true;
+    }
+    public boolean isActiveUser(Boolean is_active) {
+        if (!is_active) throw new InvalidRequestException("\nInvalid name entry!");
+        return true;
+    }
+
+
 }

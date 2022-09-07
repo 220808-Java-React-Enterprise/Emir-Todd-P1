@@ -38,10 +38,12 @@ reimbursement requests. Finance managers are authorized to make a decision on th
     4. Update pending Reimbursement <br/>
     5. View own Reimbursement Pending/History
 
+![System Use Case Diagrams](https://raw.githubusercontent.com/220207-java-enterprise/assignments/main/foundations-project/imgs/ERS%20Use%20Case%20Diagram.png)
 
 ## Technology:
 - Written in Java 8. <br/>
 - Intellij <br/>
+- Amazon AWS <br/>
 - Apache Maven <br/>
 - Apache Tomcat <br/>
 - JSON Webtoken <br/>
@@ -66,7 +68,11 @@ reimbursement requests. Finance managers are authorized to make a decision on th
 
 
 ## Future Developments:
-
+-  Add functionality to receipt to be able to upload a receipt image
+- Additional functionality to add multiple receipts to a reimbursement request
+- More testing to ensure data security
+- Implement a front end to make it a better user experience
+- Add Jenkins functionality...
 
 ## Contributors:
 - Todd Kirby
