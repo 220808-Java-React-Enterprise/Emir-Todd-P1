@@ -29,29 +29,72 @@ public class ReimbursementServiceTest {
             - @BeforeClass (logic that runs only once before all test cases)
             - @AfterClass (logic that runs only once after all test cases)
      */
-//    public void test_isNumeric_givenNumeric() {
-//        double amount = 150.00;
-//
-//
-//    }
+    @Test
+    public void test_isNumeric_givenNumeric() {
+        //arrange
+        double amount = 150.00;
 
-//    @Test(expected = InvalidRequestException.class)
-//    public void test_isNotValidUsername_givenInCorrectUsername() {
-//
-//    }
-//
-//    @Test(expected = InvalidRequestException.class)
-//    public void test_isNotValidUsername_givenEmptyUsername() {
-//
-//    }
-//
-//    @Test(expected = InvalidRequestException.class)
-//    public void test_isNotValidUsername_givenOnlyNumbers() {
-//
-//    }
-//
-//    @Test(expected = InvalidRequestException.class)
-//    public void test_isNotValidUsername_startingWithUnderscore() {
-//
-//    }
+        //act
+        sut.isNumeric(amount);
+    }
+
+    @Test(expected = InvalidRequestException.class)
+    public void test_isNotNumeric() {
+        //arrange
+        double amount = 123.0912;
+
+        //act
+        sut.isNumeric(amount);
+
+    }
+
+    @Test
+    public void test_isValidStatus() {
+        //arrange
+        String status = "456";
+
+        //act
+        sut.isValidStatus(status);
+    }
+    @Test(expected = InvalidRequestException.class)
+    public void test_isNotValidStatus() {
+        //arrange
+        String status = "234";
+
+        //act
+        sut.isValidStatus(status);
+    }
+    @Test
+    public void test_isValidType() {
+        //arrange
+        String type = "000";
+
+        //act
+        sut.isValidType(type);
+    }
+    @Test(expected = InvalidRequestException.class)
+    public void test_isNotValidType() {
+        //arrange
+        String type = "1";
+
+        //act
+        sut.isValidType(type);
+    }
+    @Test
+    public void test_isNotTooManyCharacters() {
+        //arrange
+        String amount = "Hello World";
+
+        //act
+        sut.isTooManyCharacters(amount);
+    }
+
+    @Test(expected = InvalidRequestException.class)
+    public void test_isTooManyCharacters() {
+        //arrange
+        String amount = "djfnbviwebviwebrvibewrvlkwejbvkljwenvlkjwnelkvjnervwebvoiwebviwuebvioebvoibeoiurvbweivbiuewbviuebviue";
+
+        //act
+        sut.isTooManyCharacters(amount);
+    }
 }

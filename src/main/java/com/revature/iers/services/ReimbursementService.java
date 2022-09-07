@@ -33,10 +33,10 @@ public class ReimbursementService {
         Reimbursement reimbursement = null;
         Timestamp ts = Timestamp.from(Instant.now());
 
-        //if(isValidStatus){}
-        reimbursement = new Reimbursement(reimbursementRequest.getStatus_id(), ts, reimbursementRequest.getResolver_id(), reimbursementRequest.getReimb_id());
-        reimbursementDAO.updateReimbursementStatus(reimbursement);
-
+        if (isValidStatus(reimbursementRequest.getStatus_id())) {
+            reimbursement = new Reimbursement(reimbursementRequest.getStatus_id(), ts, reimbursementRequest.getResolver_id(), reimbursementRequest.getReimb_id());
+            reimbursementDAO.updateReimbursementStatus(reimbursement);
+        }
         return reimbursement;
     }
 
@@ -62,15 +62,24 @@ public class ReimbursementService {
         Reimbursement reimbursement = null;
         Timestamp ts = Timestamp.from(Instant.now());
 
+        if (isNumeric(request.getAmount())) {
+            if (isValidType(request.getType_id())) {
+                if (isTooManyCharacters(request.getDescription())) {
+                    if (isTooManyCharacters(request.getPayment_id())) {
 
-        reimbursement = new Reimbursement(UUID.randomUUID().toString(), request.getAmount(), ts, null, request.getDescription(), null, null, request.getAuthor_id(), null, "123", request.getType_id());
-        try {
-            reimbursementDAO.save(reimbursement);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+                        reimbursement = new Reimbursement(UUID.randomUUID().toString(), request.getAmount(), ts, null, request.getDescription(), null, request.getPayment_id(), request.getAuthor_id(), null, "123", request.getType_id());
+
+                        try {
+                            reimbursementDAO.save(reimbursement);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            }
         }
-
         return reimbursement;
+
     }
 
     public List<Reimbursement> listReimbByPending() {
@@ -112,23 +121,25 @@ public class ReimbursementService {
 
     public boolean isValidStatus(String status) {
         if (!status.equals("456") && !status.equals("789"))
-            throw new InvalidRequestException("\nInvalid status selection! Please choose 456 for Approved or 789 for Disapproved");
+            throw new InvalidRequestException("Invalid status selection! Please choose 456 for Approved or 789 for Disapproved");
         return true;
     }
 
     public boolean isValidType(String type) {
         if (!type.equals("000") && !type.equals("001") && !type.equals("002") && !type.equals("003"))
-            throw new InvalidRequestException("\nInvalid type selection! Please choose 000 for food, 001 for travel, 002 for lodging, or 003 for other!");
+            throw new InvalidRequestException("Invalid type selection! Please choose 000 for food, 001 for travel, 002 for lodging, or 003 for other!");
         return true;
     }
 
-    public boolean isNumeric(Double amount){
-       String amounts = amount.toString();
-        if (!amounts.matches("(?:\\d{1,3}(?:(?=([.,]))(?:\\1\\d{3})*)?|\\d+)(?:(?!\\1)[.,]\\d{1,2})?(?![,.\\d])")) throw new InvalidRequestException("\nInvalid Entry, please use numbers in this format '00.00' ");
+    public boolean isNumeric(Double amount) {
+        String amounts = amount.toString();
+        if (!amounts.matches("^(\\d{1,5}|\\d{0,5}\\.\\d{1,2})$"))
+            throw new InvalidRequestException("Invalid Entry, please use numbers in this format '00.00' ");
         return true;
     }
-    public boolean isTooManyCharacters(String amount){
-        if (!amount.matches("^[a-z]{0,40}$")) throw new InvalidRequestException("\nToo many characters! Please limit to 40!");
+
+    public boolean isTooManyCharacters(String amount) {
+        if (!amount.matches("^.{1,50}$")) throw new InvalidRequestException("Too many characters! Please limit to 40!");
         return true;
     }
 
