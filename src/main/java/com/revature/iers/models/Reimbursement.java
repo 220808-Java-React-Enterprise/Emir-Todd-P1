@@ -68,14 +68,17 @@ public class Reimbursement {
         this.reimb_id = reimb_id;
     }
 
-    public Reimbursement(Double amount, String description, String receipt, String payment_id, String type_id, String reimb_id) {
+    public Reimbursement(Double amount, String description, String receipt, String payment_id, String type_id, String reimb_id, String status_id) {
         this.amount = amount;
         this.description = description;
         this.receipt = receipt;
         this.payment_id = payment_id;
         this.type_id = type_id;
         this.reimb_id = reimb_id;
+        this.status_id = status_id;
     }
+
+
 
     public String getReimb_id() {
         return reimb_id;

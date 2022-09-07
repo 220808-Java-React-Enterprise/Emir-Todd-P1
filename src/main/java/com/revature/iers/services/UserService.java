@@ -24,8 +24,14 @@ public class UserService {
             if (!isDuplicateUsername(request.getUsername())) {
                 if (isValidPassword(request.getPassword())) {
                     if (isSamePassword(request.getPassword(), request.getPasswordConfirm())) {
-                        user = new User(UUID.randomUUID().toString(), request.getUsername(), request.getEmail(), request.getPassword(), request.getGiven_name(), request.getSurName(), false, "3");
-                        userDAO.save(user);
+                        if(isValidEmail(request.getEmail())){
+                            if(isValidName(request.getSurName())){
+                                if(isValidName(request.getGiven_name())){
+                                    user = new User(UUID.randomUUID().toString(), request.getUsername(), request.getEmail(), EncryptionService.encryption(request.getPassword()), request.getGiven_name(), request.getSurName(), false, "3");
+                                    userDAO.save(user);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -35,9 +41,11 @@ public class UserService {
     }
 
     public Principal login(LoginRequest request) {
-        User user = userDAO.getUserByUsernameAndPassword(request.getUsername(), request.getPassword());
+        User user = userDAO.getUserByUsernameAndPassword(request.getUsername(), EncryptionService.encryption(request.getPassword()));
+        if (!isActiveUser(user.getIs_active())) throw new AuthenticationException("\nUser is not active!");
         if (user == null) throw new AuthenticationException("\nIncorrect username or password :(");
-        return new Principal(user.getId(), user.getUsername(), user.getRole_id());
+        return new Principal(user.getId(), user.getUsername(), user.getRole_id(), user.getIs_active());
+
     }
 
     public User updateUserActive(UpdateUserRequest updateUserRequest){
@@ -55,7 +63,7 @@ public class UserService {
         User user = null;
 
         if (isValidUsername(updateUserRequest.getUsername())) {
-            user = new User(updateUserRequest.getUsername(), updateUserRequest.getPassword());
+            user = new User(updateUserRequest.getUsername(), EncryptionService.encryption(updateUserRequest.getPassword()));
             userDAO.updateUserPassword(user);
         }
 
@@ -66,7 +74,7 @@ public class UserService {
         User user = null;
 
         if (isValidUsername(updateUserRequest.getUsername())) {
-            user = new User(updateUserRequest.getUsername(), updateUserRequest.getPassword(), updateUserRequest.getRole_id());
+            user = new User(updateUserRequest.getUsername(), EncryptionService.encryption(updateUserRequest.getPassword()), updateUserRequest.getRole_id());
             userDAO.updateUserRole(user);
         }
 
@@ -104,4 +112,20 @@ public class UserService {
         if (!password.equals(passwordConfirm)) throw new InvalidRequestException("\nPassword do not match :(");
         return true;
     }
+
+    public boolean isValidEmail(String email) {
+        if (!email.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")) throw new InvalidRequestException("\nInvalid email entry!");
+        return true;
+    }
+
+    public boolean isValidName(String name) {
+        if (!name.matches("^[a-zA-Z ]*$")) throw new InvalidRequestException("\nInvalid name entry!");
+        return true;
+    }
+    public boolean isActiveUser(Boolean is_active) {
+        if (!is_active) throw new InvalidRequestException("\nInvalid name entry!");
+        return true;
+    }
+
+
 }

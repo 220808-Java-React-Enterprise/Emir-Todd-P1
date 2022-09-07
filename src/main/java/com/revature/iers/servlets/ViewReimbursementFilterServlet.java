@@ -56,15 +56,14 @@ public class ViewReimbursementFilterServlet extends HttpServlet {
                     }
                 }
             } else if (path[3].equals("view_reimbursement")){
+                //resp.getWriter().write(mapper.writeValueAsString(principal.getId()));
+                //resp.getWriter().write(mapper.writeValueAsString(request.getAuthor_id()));
+                    resp.setContentType("application/json");
+                    Reimbursement reimbursement = reimbursementService.getByReimbId(request.getReimb_id());
+
                 if (principal.getRole_id().equals("2")) {
-                    resp.setContentType("application/json");
-
-                    Reimbursement reimbursement = reimbursementService.getByReimbId(request.getReimb_id());
                     resp.getWriter().write(mapper.writeValueAsString(reimbursement));
-                }else if (principal.getId().equals(request.getAuthor_id())){
-                    resp.setContentType("application/json");
-
-                    Reimbursement reimbursement = reimbursementService.getByReimbId(request.getReimb_id());
+                } else if(principal.getId().equals(reimbursement.getAuthor_id())){
                     resp.getWriter().write(mapper.writeValueAsString(reimbursement));
                 }else{
                     resp.setStatus(403); // FORBIDDEN

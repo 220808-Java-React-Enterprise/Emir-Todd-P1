@@ -89,11 +89,16 @@ public class ReimbursementServlet extends HttpServlet {
                 }
             } else if (path[3].equals("update_reimb")) {
                 if (principal.getRole_id().equals("3")) {
-                    Reimbursement createdRequest = reimbursementService.updateReimbursement(request);
+                    Reimbursement updateRequest = reimbursementService.updateReimbursement(request);
 
-                    resp.setStatus(200); // CREATED
                     resp.setContentType("application/json");
-                    resp.getWriter().write(mapper.writeValueAsString(createdRequest));
+                    if(updateRequest.getStatus_id().equals("123")){
+                        resp.setStatus(200); // CREATE
+                        resp.getWriter().write(mapper.writeValueAsString(updateRequest));
+                    }else{
+                        resp.setStatus(404);
+                        resp.getWriter().write("Reimbursement is not pending and cannot be changed");
+                    }
 
                 }
             } else {
@@ -132,7 +137,39 @@ public class ReimbursementServlet extends HttpServlet {
                         resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
                     }
                 }
-            } else {
+            } else if (path[3].equals("list_history")) {
+                if (principal.getRole_id().equals("2")) { // FINANCIAL MANAGER
+                    resp.setContentType("application/json");
+
+                    List<Reimbursement> listReimb = reimbursementService.listReimbByHistory();
+                    for (int i = 0; i < listReimb.size(); i++) {
+                        resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
+                    }
+                } else if (principal.getRole_id().equals("3")) { // EMPLOYEE
+                    resp.setContentType("application/json");
+
+                    List<Reimbursement> listReimb = reimbursementService.listReimbByAuthorHistory(principal.getId());
+                    for (int i = 0; i < listReimb.size(); i++) {
+                        resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
+                    }
+                }
+            }else if (path[3].equals("list_pending")) {
+                if (principal.getRole_id().equals("2")) { // FINANCIAL MANAGER
+                    resp.setContentType("application/json");
+
+                    List<Reimbursement> listReimb = reimbursementService.listReimbByPending();
+                    for (int i = 0; i < listReimb.size(); i++) {
+                        resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
+                    }
+                } else if (principal.getRole_id().equals("3")) { // EMPLOYEE
+                    resp.setContentType("application/json");
+
+                    List<Reimbursement> listReimb = reimbursementService.listReimbByAuthorPending(principal.getId());
+                    for (int i = 0; i < listReimb.size(); i++) {
+                        resp.getWriter().write(mapper.writeValueAsString(listReimb.get(i)));
+                    }
+                }
+            }else {
                 resp.setStatus(403); // FORBIDDEN
             }
         } catch (NullPointerException e) {

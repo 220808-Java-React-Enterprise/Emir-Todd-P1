@@ -10,7 +10,7 @@ public class User {
 
     private String surName;
 
-    private boolean is_active;
+    private Boolean is_active;
     private String role_id;
 
     public User() {
@@ -27,6 +27,13 @@ public class User {
         this.role_id = role_id;
     }
 
+    public User(String id, String username, String password, String role_id, Boolean is_active) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role_id = role_id;
+        this.is_active = is_active;
+    }
 
     public User(String id, String username, String password, String role_id) {
         this.id = id;
@@ -35,7 +42,7 @@ public class User {
         this.role_id = role_id;
     }
 
-    public User(String username, boolean is_active) {
+    public User(String username, Boolean is_active) {
         this.username = username;
         this.is_active = is_active;
     }
@@ -45,7 +52,7 @@ public class User {
     }
 
 
-    public User(String id, String username, String email, String password, String given_name, String surName, boolean is_active, String role_id) {
+    public User(String id, String username, String email, String password, String given_name, String surName, Boolean is_active, String role_id) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -104,11 +111,11 @@ public class User {
         this.surName = surName;
     }
 
-    public boolean getIs_active() {
+    public Boolean getIs_active() {
         return is_active;
     }
 
-    public void setIs_active(boolean is_active) {
+    public void setIs_active(Boolean is_active) {
         this.is_active = is_active;
     }
 
