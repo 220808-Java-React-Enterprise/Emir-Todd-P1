@@ -24,7 +24,7 @@ public class UserService {
             if (!isDuplicateUsername(request.getUsername())) {
                 if (isValidPassword(request.getPassword())) {
                     if (isSamePassword(request.getPassword(), request.getPasswordConfirm())) {
-                        user = new User(UUID.randomUUID().toString(), request.getUsername(), request.getEmail(), request.getPassword(), request.getGiven_name(), request.getSurName(), false, "3");
+                        user = new User(UUID.randomUUID().toString(), request.getUsername(), request.getEmail(), EncryptionService.encryption(request.getPassword()), request.getGiven_name(), request.getSurName(), false, "3");
                         userDAO.save(user);
                     }
                 }
@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public Principal login(LoginRequest request) {
-        User user = userDAO.getUserByUsernameAndPassword(request.getUsername(), request.getPassword());
+        User user = userDAO.getUserByUsernameAndPassword(request.getUsername(), EncryptionService.encryption(request.getPassword()));
         if (!isActiveUser(user.getIs_active())) throw new AuthenticationException("\nUser is not active!");
         if (user == null) throw new AuthenticationException("\nIncorrect username or password :(");
         return new Principal(user.getId(), user.getUsername(), user.getRole_id(), user.getIs_active());
