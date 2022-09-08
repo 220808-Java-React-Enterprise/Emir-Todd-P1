@@ -1,13 +1,30 @@
 # Emir-Todd-P1
 
 ## Index
+- Technology  <br/>
 - Project Description <br/>
 - Product Usage <br/>
-- Technology  <br/>
+- Status Flow Chart <br/>
+- User Story <br/>
 - Roles <br/>
 - ER diagram <br/>
 - Future Development <br/>
 - Contributors <br/>
+
+## Technology:
+- Written in Java 8. <br/>
+- Intellij <br/>
+- Amazon AWS <br/>
+- Apache Maven <br/>
+- Apache Tomcat <br/>
+- JSON Webtoken <br/>
+- Jackson Core <br/>
+- Postman <br/>
+- Docker <br/>
+- Dbeaver <br/>
+- Postgres <br/>
+- Junit <br/>
+- Mockito
 
 ## Project Description:
  We were tasked with building a back-end API that will support a new internal expense reimbursement system.
@@ -51,21 +68,6 @@ the money I have spent traveling for business!
 
 As a Financial Manager, I wanted an easier to use way to view all my employee's reimbursements, sort them, so I am able to approve or deny them 
 based on the criteria provided. Thankfully Todd and Emir's iers system is just the perfect system!
-## Technology:
-- Written in Java 8. <br/>
-- Intellij <br/>
-- Amazon AWS <br/>
-- Apache Maven <br/>
-- Apache Tomcat <br/>
-- JSON Webtoken <br/>
-- Jackson Core <br/>
-- Postman <br/>
-- Docker <br/>
-- Dbeaver <br/>
-- Postgres <br/>
-- Junit <br/>
-- Mockito
-
 
 ## Roles:
 - Admin <br/>
