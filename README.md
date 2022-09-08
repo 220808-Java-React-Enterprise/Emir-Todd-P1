@@ -19,27 +19,38 @@ reimbursement requests. Finance managers are authorized to make a decision on th
 
 
 ## Product Usage:
-- Login <br/>
+- Testing (todd) <br/>
+- Password Encryption (emir) <br/>
+- Login (todd/emir) <br/>
   - Admin <br/>
-    1. Add new User <br/>
-    2. Update target User's active state <br/>
-    3. Delete target User <br/>
-    4. Reset a target User's password 
+    1. Add new User (todd) <br/>
+    2. Update target User's active state (todd/emir)<br/>
+    3. Delete target User (emir)<br/>
+    4. Reset a target User's password (todd/emir)
   - Finance Manger <br/>
-    1. View all Reimbursements <br/>
-    2. Sort Reimbursements by Status/Type <br/>
-    3. Sort Reimbursements by Pending/History <br/>
-    4. View Reimbursement Details <br/>
-    5. Approve/Deny Reimbursement <br/>
+    1. View all Reimbursements (todd/emir)<br/>
+    2. Sort Reimbursements by Status/Type (todd/emir)<br/>
+    3. Sort Reimbursements by Pending/History (todd/emir)<br/>
+    4. View Reimbursement Details (todd/emir)<br/>
+    5. Approve/Deny Reimbursement (todd/emir)<br/>
   - Employee <br/>
-    1. Submit new Reimbursement <br/>
-    2. View own Reimbursements <br/>
-    3. View own Reimbursement Details <br/>
-    4. Update pending Reimbursement <br/>
-    5. View own Reimbursement Pending/History
+    1. Submit new Reimbursement (todd/emir)<br/>
+    2. View own Reimbursements (todd/emir)<br/>
+    3. View own Reimbursement Details (todd/emir)<br/>
+    4. Update pending Reimbursement (todd/emir)<br/>
+    5. View own Reimbursement Pending/History (todd/emir)
 
 ![System Use Case Diagrams](https://raw.githubusercontent.com/220207-java-enterprise/assignments/main/foundations-project/imgs/ERS%20Use%20Case%20Diagram.png)
 
+## Reimbursement Status Flow: 
+![Reimbursment Status State Flow](https://raw.githubusercontent.com/220207-java-enterprise/assignments/main/foundations-project/imgs/ERS%20State%20Flow%20Diagram.png)
+
+## User Story:
+As someone who frequently travels for work Emir and Todd's iers system allowed me to be able to submit a reimbursement request and get back 
+the money I have spent traveling for business!
+
+As a Financial Manager, I wanted an easier to use way to view all my employee's reimbursements, sort them, so I am able to approve or deny them 
+based on the criteria provided. Thankfully Todd and Emir's iers system is just the perfect system!
 ## Technology:
 - Written in Java 8. <br/>
 - Intellij <br/>
